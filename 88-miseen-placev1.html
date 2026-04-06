@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mise en Place — 88</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap');
+
+:root {
+  --laranja: #F47B20;
+  --verde-ok: #3ECF6A;
+  --bg: #111111;
+  --bg2: #1A1A1A;
+  --bg3: #222222;
+  --borda: #2E2E2E;
+  --texto: #E8E2D9;
+  --texto-dim: #666;
+  --danger: #E05252;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--texto);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.app-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--borda);
+  padding: 14px 16px 12px;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-top {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px;
+}
+.header-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 26px; letter-spacing: 3px;
+  color: var(--laranja); line-height: 1;
+}
+.header-right { display: flex; align-items: center; gap: 8px; }
+
+.live-dot {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--verde-ok); letter-spacing: 0.5px;
+}
+.live-dot::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--verde-ok); border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+.conn-offline .live-dot { color: var(--danger); }
+.conn-offline .live-dot::before { background: var(--danger); animation: none; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.btn-reset {
+  background: transparent; border: 1px solid var(--borda);
+  border-radius: 6px; color: var(--texto-dim);
+  font-family: 'Barlow', sans-serif; font-size: 12px;
+  padding: 5px 10px; cursor: pointer;
+}
+.btn-reset:active { border-color: var(--danger); color: var(--danger); }
+
+.progress-wrap { height: 4px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--verde-ok), var(--laranja));
+  border-radius: 4px; transition: width 0.5s ease; width: 0%;
+}
+.progress-info { display: flex; justify-content: space-between; margin-top: 6px; }
+.progress-info span { font-size: 11px; color: var(--texto-dim); }
+.progress-info strong { color: var(--laranja); }
+
+.add-form {
+  padding: 12px 16px; background: var(--bg2);
+  border-bottom: 1px solid var(--borda); display: flex; gap: 8px;
+}
+.add-form input {
+  flex: 1; background: var(--bg3); border: 1px solid var(--borda);
+  border-radius: 8px; padding: 10px 12px; color: var(--texto);
+  font-family: 'Barlow', sans-serif; font-size: 14px;
+  outline: none; transition: border-color 0.2s; min-width: 0;
+}
+.add-form input:focus { border-color: var(--laranja); }
+.add-form input::placeholder { color: #444; font-size: 13px; }
+#newCat { max-width: 120px; }
+
+.btn-add {
+  background: var(--laranja); border: none; border-radius: 8px;
+  color: #fff; font-size: 22px; width: 42px; height: 42px;
+  cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-add:active { opacity: 0.7; }
+
+.list-wrap { padding: 12px 16px; }
+
+.empty-state { text-align: center; padding: 48px 24px; color: var(--texto-dim); }
+.empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state h3 {
+  font-family: 'Bebas Neue', cursive; font-size: 20px;
+  letter-spacing: 2px; color: #444; margin-bottom: 6px;
+}
+.empty-state p { font-size: 13px; line-height: 1.5; }
+
+.cat-group { margin-bottom: 20px; }
+.cat-label {
+  font-family: 'Bebas Neue', cursive; font-size: 13px;
+  letter-spacing: 2px; color: var(--texto-dim); text-transform: uppercase;
+  margin-bottom: 8px; border-left: 3px solid var(--laranja); padding-left: 8px;
+}
+
+.item-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg2); border: 1px solid var(--borda);
+  border-radius: 10px; padding: 13px 14px; margin-bottom: 6px;
+  cursor: pointer; animation: slideIn 0.2s ease;
+  position: relative; overflow: hidden;
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+.item-card.done { border-color: transparent; background: rgba(62,207,106,0.06); }
+.item-card.done::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--verde-ok); border-radius: 2px 0 0 2px;
+}
+
+.check-circle {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid #444;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 12px; color: transparent; transition: all 0.2s;
+}
+.item-card.done .check-circle { background: var(--verde-ok); border-color: var(--verde-ok); color: #fff; }
+
+.item-name {
+  flex: 1; font-size: 15px; font-weight: 500; color: var(--texto);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.2s;
+}
+.item-card.done .item-name { text-decoration: line-through; color: var(--texto-dim); }
+
+.btn-del {
+  background: transparent; border: none; color: #3a3a3a;
+  font-size: 15px; cursor: pointer; padding: 4px 6px;
+  border-radius: 4px; flex-shrink: 0; transition: color 0.2s;
+}
+.btn-del:active { color: var(--danger); }
+
+.done-banner {
+  display: none; margin: 16px 16px 0;
+  background: linear-gradient(135deg, rgba(62,207,106,0.15), rgba(62,207,106,0.05));
+  border: 1px solid rgba(62,207,106,0.3); border-radius: 10px;
+  padding: 16px; text-align: center;
+}
+.done-banner.show { display: block; }
+.done-banner .d-emoji { font-size: 28px; }
+.done-banner h3 {
+  font-family: 'Bebas Neue', cursive; font-size: 22px;
+  letter-spacing: 2px; color: var(--verde-ok); margin: 4px 0 2px;
+}
+.done-banner p { font-size: 13px; color: var(--texto-dim); }
+
+.loader {
+  display: flex; align-items: center; justify-content: center;
+  padding: 48px; color: var(--texto-dim); font-size: 13px; gap: 8px;
+}
+.spinner {
+  width: 16px; height: 16px; border: 2px solid var(--borda);
+  border-top-color: var(--laranja); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75); z-index: 200;
+  align-items: flex-end; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--bg2); border: 1px solid var(--borda);
+  border-radius: 16px 16px 0 0; padding: 24px 20px 36px;
+  width: 100%; max-width: 480px; animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal h3 {
+  font-family: 'Bebas Neue', cursive; font-size: 22px;
+  letter-spacing: 2px; margin-bottom: 16px;
+}
+.modal-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-danger {
+  background: rgba(224,82,82,0.12); border: 1px solid rgba(224,82,82,0.3);
+  border-radius: 8px; color: var(--danger); font-family: 'Bebas Neue', cursive;
+  font-size: 18px; letter-spacing: 2px; padding: 13px; cursor: pointer;
+}
+.btn-danger:active { background: rgba(224,82,82,0.25); }
+.btn-cancel {
+  background: transparent; border: 1px solid var(--borda);
+  border-radius: 8px; color: var(--texto-dim);
+  font-family: 'Barlow', sans-serif; font-size: 14px; padding: 13px; cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="app-header" id="appHeader">
+  <div class="header-top">
+    <div class="header-logo">88 MISE EN PLACE</div>
+    <div class="header-right">
+      <div class="live-dot" id="liveStatus">CONECTANDO</div>
+      <button class="btn-reset" onclick="openModal()">RESETAR</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-info">
+    <span><strong id="doneCount">0</strong> concluídos</span>
+    <span><strong id="totalCount">0</strong> total</span>
+  </div>
+</div>
+
+<div class="add-form">
+  <input id="newItem" placeholder="Novo item (ex: cortar tomate)" maxlength="80" />
+  <input id="newCat"  placeholder="Categoria" maxlength="40" />
+  <button class="btn-add" onclick="addItem()">+</button>
+</div>
+
+<div class="done-banner" id="doneBanner">
+  <div class="d-emoji">🔥</div>
+  <h3>Mise en place feita!</h3>
+  <p>Tudo pronto. Bora vender!</p>
+</div>
+
+<div class="list-wrap" id="listWrap">
+  <div class="loader"><div class="spinner"></div> Conectando ao Firebase...</div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>RESETAR CHECKLIST</h3>
+    <div class="modal-actions">
+      <button class="btn-danger" onclick="resetChecked()">DESMARCAR TODOS (manter itens)</button>
+      <button class="btn-danger" onclick="resetAll()">APAGAR TUDO</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDKs ANTES do script da app -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+(function() {
+  const firebaseConfig = {
+    apiKey:            "AIzaSyBMsJZRe60S7Ls1rX700wQop-y3cGcR4ZQ",
+    authDomain:        "producao-88pizzaburger.firebaseapp.com",
+    databaseURL:       "https://producao-88pizzaburger-default-rtdb.firebaseio.com",
+    projectId:         "producao-88pizzaburger",
+    storageBucket:     "producao-88pizzaburger.firebasestorage.app",
+    messagingSenderId: "405517889367",
+    appId:             "1:405517889367:web:71d32619b10ae267c75812"
+  };
+
+  const app      = firebase.initializeApp(firebaseConfig);
+  const db       = firebase.database(app);
+  const itemsRef = db.ref('miseen_place/items');
+
+  // Status de conexão
+  db.ref('.info/connected').on('value', snap => {
+    const header = document.getElementById('appHeader');
+    const label  = document.getElementById('liveStatus');
+    header.classList.toggle('conn-offline', !snap.val());
+    label.textContent = snap.val() ? 'AO VIVO' : 'OFFLINE';
+  });
+
+  // Escuta mudanças em tempo real
+  itemsRef.on('value', snap => renderItems(snap.val() || {}));
+
+  // ── RENDER ─────────────────────────────────────
+  function renderItems(data) {
+    const wrap  = document.getElementById('listWrap');
+    const items = Object.entries(data).map(([id, v]) => ({ id, ...v }));
+
+    if (!items.length) {
+      wrap.innerHTML = `<div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h3>Checklist vazio</h3>
+        <p>Adicione os itens do dia acima.<br>Tudo sincroniza em tempo real.</p>
+      </div>`;
+      updateProgress(0, 0);
+      return;
+    }
+
+    const groups = {};
+    items.forEach(item => {
+      const cat = item.cat || 'Geral';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(item);
+    });
+
+    let html = '';
+    Object.keys(groups).sort().forEach(cat => {
+      const list = groups[cat].sort((a,b) => (a.done?1:0)-(b.done?1:0));
+      html += `<div class="cat-group"><div class="cat-label">${esc(cat)}</div>`;
+      list.forEach(item => {
+        html += `<div class="item-card ${item.done?'done':''}" onclick="window._toggle('${item.id}',${!!item.done})">
+          <div class="check-circle">${item.done?'✓':''}</div>
+          <div class="item-name">${esc(item.name)}</div>
+          <button class="btn-del" onclick="window._del(event,'${item.id}')">✕</button>
+        </div>`;
+      });
+      html += `</div>`;
+    });
+
+    wrap.innerHTML = html;
+    const total = items.length;
+    const done  = items.filter(i => i.done).length;
+    updateProgress(done, total);
+  }
+
+  function updateProgress(done, total) {
+    const pct = total ? Math.round((done/total)*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('doneCount').textContent = done;
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('doneBanner').classList.toggle('show', done===total && total>0);
+  }
+
+  // ── ACTIONS ────────────────────────────────────
+  window._toggle = function(id, isDone) {
+    itemsRef.child(id).update({ done: !isDone });
+  };
+
+  window._del = function(e, id) {
+    e.stopPropagation();
+    itemsRef.child(id).remove();
+  };
+
+  window.addItem = function() {
+    const nameEl = document.getElementById('newItem');
+    const catEl  = document.getElementById('newCat');
+    const name   = nameEl.value.trim();
+    if (!name) { nameEl.focus(); return; }
+    itemsRef.push({ name, cat: catEl.value.trim() || 'Geral', done: false, ts: Date.now() });
+    nameEl.value = '';
+    nameEl.focus();
+  };
+
+  window.openModal  = () => document.getElementById('modalOverlay').classList.add('show');
+  window.closeModal = () => document.getElementById('modalOverlay').classList.remove('show');
+
+  window.resetChecked = function() {
+    closeModal();
+    itemsRef.once('value', snap => {
+      const updates = {};
+      Object.entries(snap.val() || {}).forEach(([id,v]) => {
+        if (v.done) updates[id+'/done'] = false;
+      });
+      if (Object.keys(updates).length) itemsRef.update(updates);
+    });
+  };
+
+  window.resetAll = function() {
+    if (!confirm('Apagar TODOS os itens? Não dá pra desfazer.')) return;
+    closeModal();
+    itemsRef.remove();
+  };
+
+  // Enter para adicionar
+  document.getElementById('newItem').addEventListener('keydown', e => { if(e.key==='Enter') addItem(); });
+  document.getElementById('newCat').addEventListener('keydown',  e => { if(e.key==='Enter') addItem(); });
+
+  // Fechar modal clicando fora
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
+</body>
+</html>
