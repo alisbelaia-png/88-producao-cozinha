@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Lista de Compras — 88</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --burger: #F47B20;
+  --burger-dim: rgba(244,123,32,0.15);
+  --casa: #7C9EFF;
+  --casa-dim: rgba(124,158,255,0.15);
+  --verde: #3ECF6A;
+  --bg: #0F0F0F;
+  --bg2: #181818;
+  --bg3: #202020;
+  --borda: #2A2A2A;
+  --texto: #EDE8E0;
+  --texto-dim: #555;
+  --danger: #E05252;
+  --tab-color: var(--burger);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--texto);
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--borda);
+  padding: 14px 16px 0;
+  position: sticky; top: 0; z-index: 100;
+}
+
+.header-top {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 12px;
+}
+
+.logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 20px; letter-spacing: 3px;
+  color: var(--texto); line-height: 1;
+}
+.logo span { color: var(--burger); }
+
+.live-dot {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; color: var(--verde);
+  font-weight: 800; letter-spacing: 0.5px;
+}
+.live-dot::before {
+  content:''; width:5px; height:5px;
+  background: var(--verde); border-radius:50%;
+  animation: pulse 2s infinite;
+}
+.offline .live-dot { color: var(--danger); }
+.offline .live-dot::before { background: var(--danger); animation:none; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* TABS */
+.tabs { display:flex; }
+
+.tab {
+  flex:1; padding: 10px 0 13px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 17px; letter-spacing: 2px;
+  text-align: center; cursor: pointer;
+  color: var(--texto-dim);
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s; user-select: none;
+  position: relative;
+}
+
+.tab .tab-badge {
+  position: absolute; top: 4px; right: 18px;
+  background: var(--bg3); color: var(--texto-dim);
+  font-size: 9px; font-family: 'Nunito', sans-serif;
+  font-weight: 800; border-radius: 10px;
+  padding: 1px 5px; min-width: 16px; text-align: center;
+}
+
+.tab.active {
+  color: var(--tab-color);
+  border-bottom-color: var(--tab-color);
+}
+.tab.active .tab-badge {
+  background: var(--tab-color);
+  color: #fff;
+}
+
+/* ADD FORM */
+.add-form {
+  padding: 10px 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--borda);
+  display: flex; gap: 8px; align-items: center;
+}
+
+.add-form input {
+  flex:1; background: var(--bg3);
+  border: 1px solid var(--borda); border-radius: 10px;
+  padding: 10px 12px; color: var(--texto);
+  font-family: 'Nunito', sans-serif; font-size: 14px;
+  outline: none; transition: border-color 0.2s; min-width: 0;
+}
+.add-form input:focus { border-color: var(--tab-color); }
+.add-form input::placeholder { color: #333; font-size: 13px; }
+
+/* TAG SELECTOR */
+.tag-selector {
+  display: flex; gap: 4px; flex-shrink: 0;
+}
+
+.tag-btn {
+  border: 1.5px solid var(--borda);
+  border-radius: 8px; padding: 6px 10px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 13px; letter-spacing: 1px;
+  cursor: pointer; background: transparent;
+  color: var(--texto-dim); transition: all 0.15s;
+  white-space: nowrap;
+}
+.tag-btn.sel-burger { background: var(--burger-dim); border-color: var(--burger); color: var(--burger); }
+.tag-btn.sel-casa   { background: var(--casa-dim);   border-color: var(--casa);   color: var(--casa); }
+
+.btn-add {
+  background: var(--tab-color); border: none; border-radius: 10px;
+  color: #fff; font-size: 22px; width: 42px; height: 42px;
+  cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.15s;
+}
+.btn-add:active { opacity: 0.7; }
+
+/* SUMMARY */
+.summary {
+  padding: 8px 16px 4px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.summary-txt { font-size: 12px; color: var(--texto-dim); font-weight: 700; }
+.summary-txt b { color: var(--tab-color); }
+.summary-txt .comp-count { color: var(--verde); }
+
+.btn-limpar {
+  background: transparent; border: none;
+  font-family: 'Nunito', sans-serif; font-size: 12px;
+  color: var(--texto-dim); cursor: pointer;
+  font-weight: 800; padding: 4px 8px; border-radius: 6px;
+  transition: color 0.2s;
+}
+.btn-limpar:active { color: var(--danger); }
+
+/* LIST */
+.list-wrap { padding: 8px 16px; }
+
+.empty-state {
+  text-align: center; padding: 52px 24px; color: var(--texto-dim);
+}
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state h3 {
+  font-family: 'Bebas Neue', cursive; font-size: 20px;
+  letter-spacing: 2px; color: #2a2a2a; margin-bottom: 6px;
+}
+.empty-state p { font-size: 13px; line-height: 1.6; }
+
+.item-row {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg2); border: 1px solid var(--borda);
+  border-radius: 10px; padding: 11px 13px; margin-bottom: 5px;
+  cursor: pointer; animation: fadeIn 0.18s ease;
+  position: relative; overflow: hidden;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+.item-row.comprado {
+  background: rgba(62,207,106,0.04);
+  border-color: rgba(62,207,106,0.12);
+}
+.item-row.comprado::before {
+  content:''; position:absolute; left:0; top:0; bottom:0;
+  width:3px; background: var(--verde);
+}
+
+.check-box {
+  width: 22px; height: 22px; border-radius: 6px;
+  border: 2px solid #333; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: transparent; transition: all 0.2s;
+}
+.item-row.comprado .check-box {
+  background: var(--verde); border-color: var(--verde); color: #fff;
+}
+
+.item-nome {
+  flex: 1; font-size: 15px; font-weight: 700;
+  color: var(--texto); transition: all 0.2s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.item-row.comprado .item-nome {
+  text-decoration: line-through; color: var(--texto-dim); font-weight: 400;
+}
+
+.item-tag {
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  padding: 3px 8px; border-radius: 20px; flex-shrink: 0;
+  text-transform: uppercase;
+}
+.tag-burger { background: var(--burger-dim); color: var(--burger); }
+.tag-casa   { background: var(--casa-dim);   color: var(--casa); }
+
+.btn-del {
+  background: transparent; border: none; color: #2e2e2e;
+  font-size: 14px; cursor: pointer; padding: 3px 5px;
+  flex-shrink: 0; transition: color 0.2s; border-radius: 4px;
+}
+.btn-del:active { color: var(--danger); }
+
+/* LOADER */
+.loader {
+  display: flex; align-items: center; justify-content: center;
+  padding: 52px; color: var(--texto-dim); font-size: 13px; gap: 8px;
+}
+.spinner {
+  width: 16px; height: 16px; border: 2px solid var(--borda);
+  border-top-color: var(--tab-color); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8); z-index: 200;
+  align-items: flex-end; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--bg2); border: 1px solid var(--borda);
+  border-radius: 16px 16px 0 0; padding: 24px 20px 40px;
+  width: 100%; max-width: 480px; animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal h3 {
+  font-family: 'Bebas Neue', cursive; font-size: 20px;
+  letter-spacing: 2px; margin-bottom: 6px;
+}
+.modal-loja { font-size: 13px; color: var(--texto-dim); margin-bottom: 16px; font-weight: 700; }
+.modal-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-md {
+  border-radius: 10px; font-family: 'Bebas Neue', cursive;
+  font-size: 17px; letter-spacing: 2px; padding: 13px; cursor: pointer;
+}
+.btn-md-danger {
+  background: rgba(224,82,82,0.1); border: 1px solid rgba(224,82,82,0.25);
+  color: var(--danger);
+}
+.btn-md-danger:active { background: rgba(224,82,82,0.2); }
+.btn-md-cancel {
+  background: transparent; border: 1px solid var(--borda);
+  color: var(--texto-dim); font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 700;
+}
+</style>
+</head>
+<body>
+
+<div class="header" id="mainHeader">
+  <div class="header-top">
+    <div class="logo">🛒 LISTA <span>88</span></div>
+    <div class="live-dot" id="liveStatus">AO VIVO</div>
+  </div>
+  <div class="tabs" id="tabsEl"></div>
+</div>
+
+<div class="add-form">
+  <input id="newItem" placeholder="Nome do item..." maxlength="80" />
+  <div class="tag-selector">
+    <button class="tag-btn sel-burger" id="btnBurger" onclick="selTag('burger')">🍔</button>
+    <button class="tag-btn" id="btnCasa"   onclick="selTag('casa')">🏠</button>
+  </div>
+  <button class="btn-add" id="btnAdd" onclick="addItem()">+</button>
+</div>
+
+<div class="summary">
+  <div class="summary-txt"><b id="pendCount">0</b> pendentes · <span class="comp-count" id="compCount">0</span> comprados</div>
+  <button class="btn-limpar" onclick="openModal()">limpar</button>
+</div>
+
+<div class="list-wrap" id="listWrap">
+  <div class="loader"><div class="spinner"></div> Conectando...</div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>LIMPAR LISTA</h3>
+    <div class="modal-loja" id="modalLoja"></div>
+    <div class="modal-actions">
+      <button class="btn-md btn-md-danger" onclick="limparComprados()">REMOVER COMPRADOS</button>
+      <button class="btn-md btn-md-danger" onclick="limparTudo()">APAGAR TUDO DA LOJA</button>
+      <button class="btn-md btn-md-cancel" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+(function() {
+  const LOJAS = ['Stok Center', 'Atacadao'];
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyBMsJZRe60S7Ls1rX700wQop-y3cGcR4ZQ",
+    authDomain:        "producao-88pizzaburger.firebaseapp.com",
+    databaseURL:       "https://producao-88pizzaburger-default-rtdb.firebaseio.com",
+    projectId:         "producao-88pizzaburger",
+    storageBucket:     "producao-88pizzaburger.firebasestorage.app",
+    messagingSenderId: "405517889367",
+    appId:             "1:405517889367:web:71d32619b10ae267c75812"
+  };
+
+  const app = firebase.initializeApp(firebaseConfig);
+  const db  = firebase.database(app);
+
+  let currentLoja = LOJAS[0];
+  let currentRef  = null;
+  let currentTag  = 'burger';
+  let unsubFn     = null;
+  let countsUnsub = {};
+
+  // Status conexão
+  db.ref('.info/connected').on('value', snap => {
+    document.getElementById('mainHeader').classList.toggle('offline', !snap.val());
+    document.getElementById('liveStatus').textContent = snap.val() ? 'AO VIVO' : 'OFFLINE';
+  });
+
+  // Build tabs
+  function buildTabs() {
+    const tabsEl = document.getElementById('tabsEl');
+    tabsEl.innerHTML = '';
+    LOJAS.forEach(loja => {
+      const key = lojaKey(loja);
+      const t = document.createElement('div');
+      t.className = 'tab' + (loja === currentLoja ? ' active' : '');
+      t.innerHTML = `${loja}<span class="tab-badge" id="badge-${key}">0</span>`;
+      t.onclick = () => setLoja(loja);
+      tabsEl.appendChild(t);
+
+      // Live count nos badges
+      if (countsUnsub[key]) countsUnsub[key]();
+      countsUnsub[key] = db.ref('lista_compras/' + key).on('value', snap => {
+        const data = snap.val() || {};
+        const pend = Object.values(data).filter(v => !v.comprado).length;
+        const el = document.getElementById('badge-' + key);
+        if (el) el.textContent = pend;
+      });
+    });
+  }
+
+  function lojaKey(loja) {
+    return loja.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g,'');
+  }
+
+  // Set loja ativa
+  window.setLoja = function(loja) {
+    currentLoja = loja;
+
+    // Atualiza CSS accent (amarelo pra Atacadao, laranja pra Stok)
+    const cores = ['#F47B20', '#FFB800'];
+    const idx = LOJAS.indexOf(loja);
+    document.documentElement.style.setProperty('--tab-color', cores[idx] || '#F47B20');
+
+    buildTabs();
+
+    document.getElementById('modalLoja').textContent = loja;
+
+    if (unsubFn) { currentRef.off('value', unsubFn); }
+    currentRef = db.ref('lista_compras/' + lojaKey(loja));
+    unsubFn = currentRef.on('value', snap => render(snap.val() || {}));
+  };
+
+  // Tag selector
+  window.selTag = function(tag) {
+    currentTag = tag;
+    document.getElementById('btnBurger').className = 'tag-btn' + (tag==='burger' ? ' sel-burger' : '');
+    document.getElementById('btnCasa').className   = 'tag-btn' + (tag==='casa'   ? ' sel-casa'   : '');
+  };
+
+  // Render
+  function render(data) {
+    const wrap  = document.getElementById('listWrap');
+    const items = Object.entries(data).map(([id,v]) => ({id,...v}));
+
+    const pend = items.filter(i => !i.comprado).length;
+    const comp = items.filter(i =>  i.comprado).length;
+    document.getElementById('pendCount').textContent = pend;
+    document.getElementById('compCount').textContent = comp;
+
+    if (!items.length) {
+      wrap.innerHTML = `<div class="empty-state">
+        <div class="empty-icon">🛒</div>
+        <h3>Lista vazia</h3>
+        <p>Adicione itens acima e escolha<br>a tag 🍔 Burger ou 🏠 Casa.</p>
+      </div>`;
+      return;
+    }
+
+    // Pendentes primeiro, depois comprados
+    const sorted = items.sort((a,b) => (a.comprado?1:0)-(b.comprado?1:0));
+
+    let html = '';
+    sorted.forEach(item => {
+      const isComp = !!item.comprado;
+      const tagClass = item.tag==='casa' ? 'tag-casa' : 'tag-burger';
+      const tagLabel = item.tag==='casa' ? '🏠 Casa' : '🍔 Burger';
+      html += `<div class="item-row ${isComp?'comprado':''}" onclick="window._toggle('${item.id}',${isComp})">
+        <div class="check-box">${isComp?'✓':''}</div>
+        <div class="item-nome">${esc(item.nome)}</div>
+        <span class="item-tag ${tagClass}">${tagLabel}</span>
+        <button class="btn-del" onclick="window._del(event,'${item.id}')">✕</button>
+      </div>`;
+    });
+
+    wrap.innerHTML = html;
+  }
+
+  // Actions
+  window._toggle = (id, isComp) => currentRef.child(id).update({ comprado: !isComp });
+  window._del    = (e, id) => { e.stopPropagation(); currentRef.child(id).remove(); };
+
+  window.addItem = function() {
+    const nEl = document.getElementById('newItem');
+    const nome = nEl.value.trim();
+    if (!nome) { nEl.focus(); return; }
+    currentRef.push({ nome, tag: currentTag, comprado: false, ts: Date.now() });
+    nEl.value = '';
+    nEl.focus();
+  };
+
+  document.getElementById('newItem').addEventListener('keydown', e => { if(e.key==='Enter') addItem(); });
+
+  // Modal
+  window.openModal  = () => document.getElementById('modalOverlay').classList.add('show');
+  window.closeModal = () => document.getElementById('modalOverlay').classList.remove('show');
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target===document.getElementById('modalOverlay')) closeModal();
+  });
+
+  window.limparComprados = function() {
+    closeModal();
+    currentRef.once('value', snap => {
+      const updates = {};
+      Object.entries(snap.val()||{}).forEach(([id,v]) => { if(v.comprado) updates[id]=null; });
+      if (Object.keys(updates).length) currentRef.update(updates);
+    });
+  };
+
+  window.limparTudo = function() {
+    if (!confirm(`Apagar TUDO do ${currentLoja}?`)) return;
+    closeModal();
+    currentRef.remove();
+  };
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // Boot
+  buildTabs();
+  setLoja(LOJAS[0]);
+})();
+</script>
+</body>
+</html>
