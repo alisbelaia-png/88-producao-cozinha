@@ -370,18 +370,16 @@
 
     try {
       // Envia ao Google Apps Script
-      const response = await fetch(APPS_SCRIPT_URL, {
+      await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
       });
 
-      if (response.ok) {
-        document.getElementById('pedidoForm').style.display = 'none';
-        successMsg.style.display = 'block';
-      } else {
-        throw new Error('Erro na resposta do servidor');
-      }
+      // no-cors não retorna resposta legível — se chegou aqui é porque enviou
+      document.getElementById('pedidoForm').style.display = 'none';
+      successMsg.style.display = 'block';
     } catch (err) {
       errorMsg.textContent = 'Erro ao enviar. Tente novamente ou entre em contato.';
       errorMsg.style.display = 'block';
