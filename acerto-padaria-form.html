@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Acerto Padaria</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 4px;
+      color: #e94560;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    /* TIPO */
+    .tipo-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tipo-btn {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid #333;
+      border-radius: 12px;
+      background: #16213e;
+      color: #aaa;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .tipo-btn.active-compra {
+      border-color: #e94560;
+      background: rgba(233, 69, 96, 0.15);
+      color: #e94560;
+    }
+    .tipo-btn.active-venda {
+      border-color: #4ecca3;
+      background: rgba(78, 204, 163, 0.15);
+      color: #4ecca3;
+    }
+
+    /* PRODUTOS */
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .produto-btn {
+      padding: 18px 10px;
+      border: 2px solid #333;
+      border-radius: 12px;
+      background: #16213e;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .produto-btn .emoji { font-size: 22px; display: block; margin-bottom: 4px; }
+    .produto-btn .preco { font-size: 11px; color: #888; font-weight: 400; }
+    .produto-btn.selected {
+      border-color: #e94560;
+      background: rgba(233, 69, 96, 0.15);
+    }
+    .produto-btn.venda-mode.selected {
+      border-color: #4ecca3;
+      background: rgba(78, 204, 163, 0.15);
+    }
+    .produto-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* QUANTIDADE */
+    .qtd-section { margin-bottom: 20px; }
+    .qtd-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .qtd-btn {
+      width: 52px;
+      height: 52px;
+      border: 2px solid #444;
+      border-radius: 50%;
+      background: #16213e;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .qtd-btn:active { transform: scale(0.92); }
+    .qtd-input {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid #444;
+      border-radius: 12px;
+      background: #16213e;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .qtd-input:focus { outline: none; border-color: #e94560; }
+
+    /* OBS */
+    .obs-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #333;
+      border-radius: 12px;
+      background: #16213e;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .obs-input:focus { outline: none; border-color: #888; }
+    .obs-input::placeholder { color: #555; }
+
+    /* RESUMO */
+    .resumo-box {
+      background: #16213e;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .resumo-valor {
+      font-size: 28px;
+      font-weight: 800;
+      color: #e94560;
+    }
+    .resumo-valor.venda { color: #4ecca3; }
+    .resumo-desc { font-size: 13px; color: #888; margin-top: 2px; }
+
+    /* BOTÃO ENVIAR */
+    .btn-enviar {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 14px;
+      background: #e94560;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn-enviar:active { transform: scale(0.97); }
+    .btn-enviar:disabled { background: #333; color: #666; cursor: not-allowed; }
+    .btn-enviar.venda-mode { background: #4ecca3; color: #1a1a2e; }
+
+    /* FEEDBACK */
+    .feedback {
+      display: none;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      margin-top: 12px;
+      font-size: 15px;
+    }
+    .feedback.ok { background: rgba(78, 204, 163, 0.2); color: #4ecca3; border: 1px solid #4ecca3; }
+    .feedback.erro { background: rgba(233, 69, 96, 0.2); color: #e94560; border: 1px solid #e94560; }
+
+    /* HISTÓRICO */
+    .historico-section { margin-top: 28px; }
+    .historico-item {
+      background: #16213e;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .historico-item .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .tag-compra { background: rgba(233,69,96,0.2); color: #e94560; }
+    .tag-venda { background: rgba(78,204,163,0.2); color: #4ecca3; }
+    .historico-item .valor { font-weight: 700; }
+    .historico-item .descricao { color: #aaa; margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+<h1>🍔 Acerto Padaria</h1>
+<p class="subtitle">88 PizzaBurger</p>
+
+<!-- TIPO -->
+<p class="section-title">Tipo de lançamento</p>
+<div class="tipo-row">
+  <button class="tipo-btn active-compra" onclick="setTipo('COMPRA')" id="btn-compra">🛒 Eu comprei</button>
+  <button class="tipo-btn" onclick="setTipo('VENDA')" id="btn-venda">🍓 Vendi morango</button>
+</div>
+
+<!-- PRODUTOS -->
+<p class="section-title">Produto</p>
+<div class="produtos-grid" id="grade-produtos">
+  <button class="produto-btn" onclick="setProduto('XIS')" id="btn-XIS">
+    <span class="emoji">🍔</span>
+    Pão Xis
+    <span class="preco">R$ 2,00/un</span>
+  </button>
+  <button class="produto-btn" onclick="setProduto('DOG')" id="btn-DOG">
+    <span class="emoji">🌭</span>
+    Pão Dog
+    <span class="preco">R$ 2,00/un</span>
+  </button>
+  <button class="produto-btn" onclick="setProduto('FARINHA')" id="btn-FARINHA">
+    <span class="emoji">🥣</span>
+    Farinha de Rosca
+    <span class="preco">R$ 13,00/kg</span>
+  </button>
+  <button class="produto-btn" onclick="setProduto('MORANGO')" id="btn-MORANGO" disabled>
+    <span class="emoji">🍓</span>
+    Morango
+    <span class="preco">R$ 20,00/kg</span>
+  </button>
+</div>
+
+<!-- QUANTIDADE -->
+<p class="section-title">Quantidade</p>
+<div class="qtd-section">
+  <div class="qtd-row">
+    <button class="qtd-btn" onclick="ajustarQtd(-1)">−</button>
+    <input type="number" class="qtd-input" id="quantidade" value="10" min="0" step="1" oninput="atualizarResumo()">
+    <button class="qtd-btn" onclick="ajustarQtd(+1)">+</button>
+  </div>
+</div>
+
+<!-- OBS -->
+<input type="text" class="obs-input" id="observacao" placeholder="Observação (opcional)...">
+
+<!-- RESUMO -->
+<div class="resumo-box">
+  <div class="resumo-valor" id="resumo-valor">R$ 20,00</div>
+  <div class="resumo-desc" id="resumo-desc">10 un × R$ 2,00</div>
+</div>
+
+<!-- BOTÃO -->
+<button class="btn-enviar" id="btn-enviar" onclick="enviar()">✅ Registrar lançamento</button>
+<div class="feedback" id="feedback"></div>
+
+<!-- HISTÓRICO LOCAL -->
+<div class="historico-section">
+  <p class="section-title">Últimos registros (esta sessão)</p>
+  <div id="historico"></div>
+</div>
+
+<script>
+  // ─── CONFIGURAÇÃO ──────────────────────────────────────────────
+  // IMPORTANTE: após ativar o workflow no n8n, cole a URL do webhook aqui
+  const WEBHOOK_URL = 'https://cluckingelephant-n8n.cloudfy.live/webhook/acerto-padaria';
+  // ──────────────────────────────────────────────────────────────
+
+  const precos = { XIS: 2.00, DOG: 2.00, FARINHA: 13.00, MORANGO: 20.00 };
+  const unidades = { XIS: 'un', DOG: 'un', FARINHA: 'kg', MORANGO: 'kg' };
+
+  let tipoAtual = 'COMPRA';
+  let produtoAtual = 'XIS';
+
+  function setTipo(tipo) {
+    tipoAtual = tipo;
+    document.getElementById('btn-compra').className = 'tipo-btn' + (tipo === 'COMPRA' ? ' active-compra' : '');
+    document.getElementById('btn-venda').className = 'tipo-btn' + (tipo === 'VENDA' ? ' active-venda' : '');
+
+    // Em modo venda, só habilita morango
+    const produtos = ['XIS', 'DOG', 'FARINHA', 'MORANGO'];
+    produtos.forEach(p => {
+      const btn = document.getElementById('btn-' + p);
+      if (tipo === 'VENDA') {
+        btn.disabled = p !== 'MORANGO';
+        btn.className = 'produto-btn venda-mode';
+      } else {
+        btn.disabled = false;
+        btn.className = 'produto-btn';
+      }
+    });
+
+    if (tipo === 'VENDA') {
+      setProduto('MORANGO');
+      document.getElementById('btn-enviar').className = 'btn-enviar venda-mode';
+    } else {
+      if (produtoAtual === 'MORANGO') setProduto('XIS');
+      document.getElementById('btn-enviar').className = 'btn-enviar';
+    }
+    atualizarResumo();
+  }
+
+  function setProduto(produto) {
+    produtoAtual = produto;
+    ['XIS','DOG','FARINHA','MORANGO'].forEach(p => {
+      const btn = document.getElementById('btn-' + p);
+      const base = tipoAtual === 'VENDA' ? 'produto-btn venda-mode' : 'produto-btn';
+      btn.className = base + (p === produto ? ' selected' : '');
+    });
+    atualizarResumo();
+  }
+
+  function ajustarQtd(delta) {
+    const input = document.getElementById('quantidade');
+    const atual = parseFloat(input.value) || 0;
+    const step = (produtoAtual === 'FARINHA' || produtoAtual === 'MORANGO') ? 0.5 : 5;
+    input.value = Math.max(0, atual + (delta * step));
+    atualizarResumo();
+  }
+
+  function atualizarResumo() {
+    const qtd = parseFloat(document.getElementById('quantidade').value) || 0;
+    const preco = precos[produtoAtual] || 0;
+    const total = qtd * preco;
+    const und = unidades[produtoAtual];
+
+    document.getElementById('resumo-valor').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    document.getElementById('resumo-valor').className = 'resumo-valor' + (tipoAtual === 'VENDA' ? ' venda' : '');
+    document.getElementById('resumo-desc').textContent = qtd + ' ' + und + ' × R$ ' + preco.toFixed(2).replace('.', ',');
+  }
+
+  async function enviar() {
+    const qtd = parseFloat(document.getElementById('quantidade').value) || 0;
+    if (qtd <= 0) { mostrarFeedback('erro', '⚠️ Informe uma quantidade válida'); return; }
+
+    const btn = document.getElementById('btn-enviar');
+    btn.disabled = true;
+    btn.textContent = '⏳ Registrando...';
+
+    const payload = {
+      tipo: tipoAtual,
+      produto: produtoAtual,
+      quantidade: qtd,
+      observacao: document.getElementById('observacao').value || ''
+    };
+
+    try {
+      const resp = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (resp.ok) {
+        const preco = precos[produtoAtual];
+        const total = qtd * preco;
+        const und = unidades[produtoAtual];
+        const emoji = tipoAtual === 'COMPRA' ? '🛒' : '🍓';
+        mostrarFeedback('ok', '✅ Registrado! ' + emoji + ' ' + produtoAtual + ' ' + qtd + und + ' = R$' + total.toFixed(2).replace('.', ','));
+        adicionarHistorico(payload, total, und);
+        document.getElementById('observacao').value = '';
+        document.getElementById('quantidade').value = '10';
+        atualizarResumo();
+      } else {
+        mostrarFeedback('erro', '❌ Erro ao registrar. Tente novamente.');
+      }
+    } catch (e) {
+      mostrarFeedback('erro', '❌ Sem conexão. Verifique o n8n.');
+    }
+
+    btn.disabled = false;
+    btn.textContent = tipoAtual === 'VENDA' ? '✅ Registrar lançamento' : '✅ Registrar lançamento';
+  }
+
+  function mostrarFeedback(tipo, msg) {
+    const el = document.getElementById('feedback');
+    el.className = 'feedback ' + tipo;
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
+
+  function adicionarHistorico(payload, total, und) {
+    const div = document.getElementById('historico');
+    const agora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const item = document.createElement('div');
+    item.className = 'historico-item';
+    item.innerHTML = `
+      <div>
+        <div><span class="tag tag-${payload.tipo.toLowerCase()}">${payload.tipo}</span> <strong>${payload.produto}</strong></div>
+        <div class="descricao">${payload.quantidade}${und} — ${agora}</div>
+      </div>
+      <div class="valor">R$ ${total.toFixed(2).replace('.', ',')}</div>
+    `;
+    div.insertBefore(item, div.firstChild);
+  }
+
+  // Inicializar
+  setProduto('XIS');
+  atualizarResumo();
+</script>
+</body>
+</html>
