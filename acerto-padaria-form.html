@@ -308,8 +308,9 @@
   <input type="number" class="valor-input" id="valor-pagamento" placeholder="0,00" min="0" step="0.01" oninput="atualizarResumo()">
 </div>
 
-<!-- OBS -->
-<input type="text" class="obs-input" id="observacao" placeholder="Observação (opcional)...">
+<!-- DATA REFERENCIA -->
+<p class="section-title">Data de referência</p>
+<input type="text" class="obs-input" id="observacao" placeholder="Ex: 08/05, Pix 08/05, até 10/05...">
 
 <!-- RESUMO -->
 <div class="resumo-box">
@@ -443,6 +444,7 @@
         quantidade: qtd,
         observacao: document.getElementById('observacao').value || ''
       };
+    }
     }
 
     const btn = document.getElementById('btn-enviar');
