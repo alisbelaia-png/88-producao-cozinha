@@ -38,7 +38,6 @@
       margin-bottom: 10px;
     }
 
-    /* TIPO */
     .tipo-row {
       display: flex;
       gap: 10px;
@@ -57,23 +56,10 @@
       text-align: center;
       transition: all 0.2s;
     }
-    .tipo-btn.active-compra {
-      border-color: #e94560;
-      background: rgba(233, 69, 96, 0.15);
-      color: #e94560;
-    }
-    .tipo-btn.active-venda {
-      border-color: #4ecca3;
-      background: rgba(78, 204, 163, 0.15);
-      color: #4ecca3;
-    }
-    .tipo-btn.active-pagamento {
-      border-color: #f7b731;
-      background: rgba(247, 183, 49, 0.15);
-      color: #f7b731;
-    }
+    .tipo-btn.active-compra    { border-color: #e94560; background: rgba(233,69,96,0.15);   color: #e94560; }
+    .tipo-btn.active-venda     { border-color: #4ecca3; background: rgba(78,204,163,0.15);  color: #4ecca3; }
+    .tipo-btn.active-pagamento { border-color: #f7b731; background: rgba(247,183,49,0.15);  color: #f7b731; }
 
-    /* PRODUTOS */
     .produtos-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -94,159 +80,91 @@
     }
     .produto-btn .emoji { font-size: 22px; display: block; margin-bottom: 4px; }
     .produto-btn .preco { font-size: 11px; color: #888; font-weight: 400; }
-    .produto-btn.selected {
-      border-color: #e94560;
-      background: rgba(233, 69, 96, 0.15);
-    }
-    .produto-btn.venda-mode.selected {
-      border-color: #4ecca3;
-      background: rgba(78, 204, 163, 0.15);
-    }
-    .produto-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+    .produto-btn.selected           { border-color: #e94560; background: rgba(233,69,96,0.15); }
+    .produto-btn.venda-mode.selected{ border-color: #4ecca3; background: rgba(78,204,163,0.15); }
+    .produto-btn:disabled           { opacity: 0.3; cursor: not-allowed; }
 
-    /* QUANTIDADE */
     .qtd-section { margin-bottom: 20px; }
-    .qtd-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .qtd-row { display: flex; align-items: center; gap: 12px; }
     .qtd-btn {
-      width: 52px;
-      height: 52px;
-      border: 2px solid #444;
-      border-radius: 50%;
-      background: #16213e;
-      color: #fff;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      flex-shrink: 0;
+      width: 52px; height: 52px;
+      border: 2px solid #444; border-radius: 50%;
+      background: #16213e; color: #fff;
+      font-size: 24px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
     }
     .qtd-btn:active { transform: scale(0.92); }
     .qtd-input {
-      flex: 1;
-      padding: 14px;
-      border: 2px solid #444;
-      border-radius: 12px;
-      background: #16213e;
-      color: #fff;
-      font-size: 24px;
-      font-weight: 700;
-      text-align: center;
+      flex: 1; padding: 14px;
+      border: 2px solid #444; border-radius: 12px;
+      background: #16213e; color: #fff;
+      font-size: 24px; font-weight: 700; text-align: center;
     }
     .qtd-input:focus { outline: none; border-color: #e94560; }
 
-    /* VALOR PAGAMENTO */
-    .pagamento-section {
-      display: none;
-      margin-bottom: 20px;
-    }
+    .pagamento-section { display: none; margin-bottom: 20px; }
     .pagamento-section.visible { display: block; }
     .valor-input {
-      width: 100%;
-      padding: 18px 14px;
-      border: 2px solid #f7b731;
-      border-radius: 12px;
-      background: #16213e;
-      color: #f7b731;
-      font-size: 28px;
-      font-weight: 800;
-      text-align: center;
+      width: 100%; padding: 18px 14px;
+      border: 2px solid #f7b731; border-radius: 12px;
+      background: #16213e; color: #f7b731;
+      font-size: 28px; font-weight: 800; text-align: center;
     }
-    .valor-input:focus { outline: none; border-color: #f7b731; }
+    .valor-input:focus { outline: none; }
     .valor-input::placeholder { color: #555; font-size: 18px; font-weight: 400; }
 
-    /* OBS */
-    .obs-input {
-      width: 100%;
-      padding: 12px 14px;
-      border: 2px solid #333;
-      border-radius: 12px;
-      background: #16213e;
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 20px;
+    .data-input {
+      width: 100%; padding: 12px 14px;
+      border: 2px solid #333; border-radius: 12px;
+      background: #16213e; color: #fff;
+      font-size: 14px; margin-bottom: 20px;
     }
-    .obs-input:focus { outline: none; border-color: #888; }
-    .obs-input::placeholder { color: #555; }
+    .data-input:focus { outline: none; border-color: #888; }
+    .data-input::placeholder { color: #555; }
 
-    /* RESUMO */
     .resumo-box {
-      background: #16213e;
-      border: 2px solid #333;
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 20px;
-      text-align: center;
+      background: #16213e; border: 2px solid #333;
+      border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 20px; text-align: center;
     }
-    .resumo-valor {
-      font-size: 28px;
-      font-weight: 800;
-      color: #e94560;
-    }
-    .resumo-valor.venda { color: #4ecca3; }
+    .resumo-valor { font-size: 28px; font-weight: 800; color: #e94560; }
+    .resumo-valor.venda     { color: #4ecca3; }
     .resumo-valor.pagamento { color: #f7b731; }
     .resumo-desc { font-size: 13px; color: #888; margin-top: 2px; }
 
-    /* BOTÃO ENVIAR */
     .btn-enviar {
-      width: 100%;
-      padding: 18px;
-      border: none;
-      border-radius: 14px;
-      background: #e94560;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.5px;
+      width: 100%; padding: 18px; border: none;
+      border-radius: 14px; background: #e94560;
+      color: #fff; font-size: 18px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.5px;
     }
-    .btn-enviar:active { transform: scale(0.97); }
+    .btn-enviar:active   { transform: scale(0.97); }
     .btn-enviar:disabled { background: #333; color: #666; cursor: not-allowed; }
-    .btn-enviar.venda-mode { background: #4ecca3; color: #1a1a2e; }
-    .btn-enviar.pagamento-mode { background: #f7b731; color: #1a1a2e; }
+    .btn-enviar.venda-mode    { background: #4ecca3; color: #1a1a2e; }
+    .btn-enviar.pagamento-mode{ background: #f7b731; color: #1a1a2e; }
 
-    /* FEEDBACK */
     .feedback {
-      display: none;
-      padding: 14px;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 600;
-      margin-top: 12px;
-      font-size: 15px;
+      display: none; padding: 14px; border-radius: 12px;
+      text-align: center; font-weight: 600;
+      margin-top: 12px; font-size: 15px;
     }
-    .feedback.ok { background: rgba(78, 204, 163, 0.2); color: #4ecca3; border: 1px solid #4ecca3; }
-    .feedback.erro { background: rgba(233, 69, 96, 0.2); color: #e94560; border: 1px solid #e94560; }
+    .feedback.ok   { background: rgba(78,204,163,0.2); color: #4ecca3; border: 1px solid #4ecca3; }
+    .feedback.erro { background: rgba(233,69,96,0.2);  color: #e94560; border: 1px solid #e94560; }
 
-    /* HISTÓRICO */
     .historico-section { margin-top: 28px; }
     .historico-item {
-      background: #16213e;
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
+      background: #16213e; border-radius: 10px;
+      padding: 10px 14px; margin-bottom: 8px;
+      display: flex; justify-content: space-between;
+      align-items: center; font-size: 13px;
     }
     .historico-item .tag {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-weight: 600;
+      font-size: 11px; padding: 2px 8px;
+      border-radius: 20px; font-weight: 600;
     }
-    .tag-compra { background: rgba(233,69,96,0.2); color: #e94560; }
-    .tag-venda { background: rgba(78,204,163,0.2); color: #4ecca3; }
+    .tag-compra    { background: rgba(233,69,96,0.2);  color: #e94560; }
+    .tag-venda     { background: rgba(78,204,163,0.2); color: #4ecca3; }
     .tag-pagamento { background: rgba(247,183,49,0.2); color: #f7b731; }
     .historico-item .valor { font-weight: 700; }
     .historico-item .descricao { color: #aaa; margin-top: 2px; }
@@ -257,41 +175,30 @@
 <h1>🍔 Acerto Padaria</h1>
 <p class="subtitle">88 PizzaBurger</p>
 
-<!-- TIPO -->
 <p class="section-title">Tipo de lançamento</p>
 <div class="tipo-row">
-  <button class="tipo-btn active-compra" onclick="setTipo('COMPRA')" id="btn-compra">🛒 Eu comprei</button>
-  <button class="tipo-btn" onclick="setTipo('VENDA')" id="btn-venda">🍓 Vendi</button>
-  <button class="tipo-btn" onclick="setTipo('PAGAMENTO')" id="btn-pagamento">💰 Paguei</button>
+  <button class="tipo-btn active-compra" id="btn-compra"    onclick="setTipo('COMPRA')">🛒 Eu comprei</button>
+  <button class="tipo-btn"               id="btn-venda"     onclick="setTipo('VENDA')">🍓 Vendi</button>
+  <button class="tipo-btn"               id="btn-pagamento" onclick="setTipo('PAGAMENTO')">💰 Paguei</button>
 </div>
 
-<!-- PRODUTOS (oculto no pagamento) -->
 <div id="secao-produtos">
   <p class="section-title">Produto</p>
-  <div class="produtos-grid" id="grade-produtos">
-    <button class="produto-btn" onclick="setProduto('XIS')" id="btn-XIS">
-      <span class="emoji">🍔</span>
-      Pão Xis
-      <span class="preco">R$ 2,00/un</span>
+  <div class="produtos-grid">
+    <button class="produto-btn selected" id="btn-XIS"     onclick="setProduto('XIS')">
+      <span class="emoji">🍔</span>Pão Xis<span class="preco">R$ 2,00/un</span>
     </button>
-    <button class="produto-btn" onclick="setProduto('DOG')" id="btn-DOG">
-      <span class="emoji">🌭</span>
-      Pão Dog
-      <span class="preco">R$ 2,00/un</span>
+    <button class="produto-btn"          id="btn-DOG"     onclick="setProduto('DOG')">
+      <span class="emoji">🌭</span>Pão Dog<span class="preco">R$ 2,00/un</span>
     </button>
-    <button class="produto-btn" onclick="setProduto('FARINHA')" id="btn-FARINHA">
-      <span class="emoji">🥣</span>
-      Farinha de Rosca
-      <span class="preco">R$ 13,00/kg</span>
+    <button class="produto-btn"          id="btn-FARINHA" onclick="setProduto('FARINHA')">
+      <span class="emoji">🥣</span>Farinha de Rosca<span class="preco">R$ 13,00/kg</span>
     </button>
-    <button class="produto-btn" onclick="setProduto('MORANGO')" id="btn-MORANGO" disabled>
-      <span class="emoji">🍓</span>
-      Morango
-      <span class="preco">R$ 20,00/kg</span>
+    <button class="produto-btn"          id="btn-MORANGO" onclick="setProduto('MORANGO')" disabled>
+      <span class="emoji">🍓</span>Morango<span class="preco">R$ 20,00/kg</span>
     </button>
   </div>
 
-  <!-- QUANTIDADE -->
   <p class="section-title">Quantidade</p>
   <div class="qtd-section">
     <div class="qtd-row">
@@ -302,27 +209,22 @@
   </div>
 </div>
 
-<!-- VALOR PAGAMENTO -->
 <div class="pagamento-section" id="secao-pagamento">
   <p class="section-title">Valor pago (R$)</p>
   <input type="number" class="valor-input" id="valor-pagamento" placeholder="0,00" min="0" step="0.01" oninput="atualizarResumo()">
 </div>
 
-<!-- DATA REFERENCIA -->
 <p class="section-title">Data de referência</p>
-<input type="text" class="obs-input" id="observacao" placeholder="Ex: 08/05, Pix 08/05, até 10/05...">
+<input type="text" class="data-input" id="data-ref" placeholder="Ex: 08/05, Pix 08/05, até 10/05...">
 
-<!-- RESUMO -->
 <div class="resumo-box">
   <div class="resumo-valor" id="resumo-valor">R$ 20,00</div>
-  <div class="resumo-desc" id="resumo-desc">10 un × R$ 2,00</div>
+  <div class="resumo-desc"  id="resumo-desc">10 un × R$ 2,00</div>
 </div>
 
-<!-- BOTÃO -->
 <button class="btn-enviar" id="btn-enviar" onclick="enviar()">✅ Registrar lançamento</button>
 <div class="feedback" id="feedback"></div>
 
-<!-- HISTÓRICO LOCAL -->
 <div class="historico-section">
   <p class="section-title">Últimos registros (esta sessão)</p>
   <div id="historico"></div>
@@ -331,43 +233,42 @@
 <script>
   const WEBHOOK_URL = 'https://cluckingelephant-n8n.cloudfy.live/webhook/acerto-padaria';
 
-  const precos = { XIS: 2.00, DOG: 2.00, FARINHA: 13.00, MORANGO: 20.00 };
-  const unidades = { XIS: 'un', DOG: 'un', FARINHA: 'kg', MORANGO: 'kg' };
+  const precos   = { XIS: 2.00, DOG: 2.00, FARINHA: 13.00, MORANGO: 20.00 };
+  const unidades = { XIS: 'un', DOG: 'un', FARINHA: 'kg',  MORANGO: 'kg'  };
 
-  let tipoAtual = 'COMPRA';
+  let tipoAtual    = 'COMPRA';
   let produtoAtual = 'XIS';
 
   function setTipo(tipo) {
     tipoAtual = tipo;
 
-    document.getElementById('btn-compra').className = 'tipo-btn' + (tipo === 'COMPRA' ? ' active-compra' : '');
-    document.getElementById('btn-venda').className = 'tipo-btn' + (tipo === 'VENDA' ? ' active-venda' : '');
+    document.getElementById('btn-compra').className    = 'tipo-btn' + (tipo === 'COMPRA'    ? ' active-compra'    : '');
+    document.getElementById('btn-venda').className     = 'tipo-btn' + (tipo === 'VENDA'     ? ' active-venda'     : '');
     document.getElementById('btn-pagamento').className = 'tipo-btn' + (tipo === 'PAGAMENTO' ? ' active-pagamento' : '');
 
-    const secaoProdutos = document.getElementById('secao-produtos');
-    const secaoPagamento = document.getElementById('secao-pagamento');
-    const btnEnviar = document.getElementById('btn-enviar');
+    const secProdutos  = document.getElementById('secao-produtos');
+    const secPagamento = document.getElementById('secao-pagamento');
+    const btnEnviar    = document.getElementById('btn-enviar');
 
     if (tipo === 'PAGAMENTO') {
-      secaoProdutos.style.display = 'none';
-      secaoPagamento.classList.add('visible');
+      secProdutos.style.display = 'none';
+      secPagamento.classList.add('visible');
       btnEnviar.className = 'btn-enviar pagamento-mode';
       document.getElementById('valor-pagamento').value = '';
       atualizarResumo();
       return;
     }
 
-    secaoProdutos.style.display = 'block';
-    secaoPagamento.classList.remove('visible');
+    secProdutos.style.display = 'block';
+    secPagamento.classList.remove('visible');
 
-    const produtos = ['XIS', 'DOG', 'FARINHA', 'MORANGO'];
-    produtos.forEach(p => {
+    ['XIS','DOG','FARINHA','MORANGO'].forEach(function(p) {
       const btn = document.getElementById('btn-' + p);
       if (tipo === 'VENDA') {
-        btn.disabled = p !== 'MORANGO';
+        btn.disabled  = (p !== 'MORANGO');
         btn.className = 'produto-btn venda-mode';
       } else {
-        btn.disabled = false;
+        btn.disabled  = false;
         btn.className = 'produto-btn';
       }
     });
@@ -379,13 +280,14 @@
       if (produtoAtual === 'MORANGO') setProduto('XIS');
       btnEnviar.className = 'btn-enviar';
     }
+
     atualizarResumo();
   }
 
   function setProduto(produto) {
     produtoAtual = produto;
-    ['XIS','DOG','FARINHA','MORANGO'].forEach(p => {
-      const btn = document.getElementById('btn-' + p);
+    ['XIS','DOG','FARINHA','MORANGO'].forEach(function(p) {
+      const btn  = document.getElementById('btn-' + p);
       const base = tipoAtual === 'VENDA' ? 'produto-btn venda-mode' : 'produto-btn';
       btn.className = base + (p === produto ? ' selected' : '');
     });
@@ -395,60 +297,49 @@
   function ajustarQtd(delta) {
     const input = document.getElementById('quantidade');
     const atual = parseFloat(input.value) || 0;
-    const step = (produtoAtual === 'FARINHA' || produtoAtual === 'MORANGO') ? 0.5 : 5;
+    const step  = (produtoAtual === 'FARINHA' || produtoAtual === 'MORANGO') ? 0.5 : 5;
     input.value = Math.max(0, atual + (delta * step));
     atualizarResumo();
   }
 
   function atualizarResumo() {
     const resumoValor = document.getElementById('resumo-valor');
-    const resumoDesc = document.getElementById('resumo-desc');
+    const resumoDesc  = document.getElementById('resumo-desc');
 
     if (tipoAtual === 'PAGAMENTO') {
       const val = parseFloat(document.getElementById('valor-pagamento').value) || 0;
       resumoValor.textContent = 'R$ ' + val.toFixed(2).replace('.', ',');
-      resumoValor.className = 'resumo-valor pagamento';
-      resumoDesc.textContent = 'Pagamento registrado';
+      resumoValor.className   = 'resumo-valor pagamento';
+      resumoDesc.textContent  = 'Pagamento a registrar';
       return;
     }
 
-    const qtd = parseFloat(document.getElementById('quantidade').value) || 0;
+    const qtd   = parseFloat(document.getElementById('quantidade').value) || 0;
     const preco = precos[produtoAtual] || 0;
     const total = qtd * preco;
-    const und = unidades[produtoAtual];
+    const und   = unidades[produtoAtual];
 
     resumoValor.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-    resumoValor.className = 'resumo-valor' + (tipoAtual === 'VENDA' ? ' venda' : '');
-    resumoDesc.textContent = qtd + ' ' + und + ' × R$ ' + preco.toFixed(2).replace('.', ',');
+    resumoValor.className   = 'resumo-valor' + (tipoAtual === 'VENDA' ? ' venda' : '');
+    resumoDesc.textContent  = qtd + ' ' + und + ' × R$ ' + preco.toFixed(2).replace('.', ',');
   }
 
   async function enviar() {
-    let payload = {};
+    const dataRef = document.getElementById('data-ref').value || '';
+    let payload   = {};
 
     if (tipoAtual === 'PAGAMENTO') {
       const val = parseFloat(document.getElementById('valor-pagamento').value) || 0;
       if (val <= 0) { mostrarFeedback('erro', '⚠️ Informe o valor do pagamento'); return; }
-      payload = {
-        tipo: 'PAGAMENTO',
-        produto: 'PAGAMENTO',
-        quantidade: 1,
-        valor_total: val,
-        observacao: document.getElementById('observacao').value || ''
-      };
+      payload = { tipo: 'PAGAMENTO', produto: 'PAGAMENTO', quantidade: 1, valor_total: val, observacao: dataRef };
     } else {
       const qtd = parseFloat(document.getElementById('quantidade').value) || 0;
       if (qtd <= 0) { mostrarFeedback('erro', '⚠️ Informe uma quantidade válida'); return; }
-      payload = {
-        tipo: tipoAtual,
-        produto: produtoAtual,
-        quantidade: qtd,
-        observacao: document.getElementById('observacao').value || ''
-      };
-    }
+      payload = { tipo: tipoAtual, produto: produtoAtual, quantidade: qtd, observacao: dataRef };
     }
 
     const btn = document.getElementById('btn-enviar');
-    btn.disabled = true;
+    btn.disabled    = true;
     btn.textContent = '⏳ Registrando...';
 
     try {
@@ -460,73 +351,66 @@
 
       if (resp.ok) {
         if (tipoAtual === 'PAGAMENTO') {
-          const val = payload.valor_total;
-          mostrarFeedback('ok', '✅ Pagamento de R$ ' + val.toFixed(2).replace('.', ',') + ' registrado!');
-          adicionarHistoricoPagamento(val);
+          mostrarFeedback('ok', '✅ Pagamento de R$ ' + payload.valor_total.toFixed(2).replace('.', ',') + ' registrado!');
+          adicionarHistoricoPagamento(payload.valor_total, dataRef);
           document.getElementById('valor-pagamento').value = '';
         } else {
-          const preco = precos[produtoAtual];
-          const qtd = payload.quantidade;
-          const total = qtd * preco;
-          const und = unidades[produtoAtual];
+          const total = payload.quantidade * precos[produtoAtual];
+          const und   = unidades[produtoAtual];
           const emoji = tipoAtual === 'COMPRA' ? '🛒' : '🍓';
-          mostrarFeedback('ok', '✅ Registrado! ' + emoji + ' ' + produtoAtual + ' ' + qtd + und + ' = R$' + total.toFixed(2).replace('.', ','));
-          adicionarHistorico(payload, total, und);
+          mostrarFeedback('ok', '✅ ' + emoji + ' ' + produtoAtual + ' ' + payload.quantidade + und + ' = R$ ' + total.toFixed(2).replace('.', ','));
+          adicionarHistorico(payload, total, und, dataRef);
         }
-        document.getElementById('observacao').value = '';
+        document.getElementById('data-ref').value   = '';
         document.getElementById('quantidade').value = '10';
         atualizarResumo();
       } else {
         mostrarFeedback('erro', '❌ Erro ao registrar. Tente novamente.');
       }
-    } catch (e) {
+    } catch(e) {
       mostrarFeedback('erro', '❌ Sem conexão. Verifique o n8n.');
     }
 
-    btn.disabled = false;
+    btn.disabled    = false;
     btn.textContent = '✅ Registrar lançamento';
   }
 
   function mostrarFeedback(tipo, msg) {
     const el = document.getElementById('feedback');
-    el.className = 'feedback ' + tipo;
-    el.textContent = msg;
-    el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
+    el.className      = 'feedback ' + tipo;
+    el.textContent    = msg;
+    el.style.display  = 'block';
+    setTimeout(function() { el.style.display = 'none'; }, 4000);
   }
 
-  function adicionarHistorico(payload, total, und) {
-    const div = document.getElementById('historico');
-    const agora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  function adicionarHistorico(payload, total, und, dataRef) {
+    const div  = document.getElementById('historico');
+    const hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const item = document.createElement('div');
     item.className = 'historico-item';
-    item.innerHTML = `
-      <div>
-        <div><span class="tag tag-${payload.tipo.toLowerCase()}">${payload.tipo}</span> <strong>${payload.produto}</strong></div>
-        <div class="descricao">${payload.quantidade}${und} — ${agora}</div>
-      </div>
-      <div class="valor">R$ ${total.toFixed(2).replace('.', ',')}</div>
-    `;
+    item.innerHTML =
+      '<div>' +
+        '<div><span class="tag tag-' + payload.tipo.toLowerCase() + '">' + payload.tipo + '</span> <strong>' + payload.produto + '</strong></div>' +
+        '<div class="descricao">' + payload.quantidade + und + (dataRef ? ' — ' + dataRef : '') + ' — ' + hora + '</div>' +
+      '</div>' +
+      '<div class="valor">R$ ' + total.toFixed(2).replace('.', ',') + '</div>';
     div.insertBefore(item, div.firstChild);
   }
 
-  function adicionarHistoricoPagamento(val) {
-    const div = document.getElementById('historico');
-    const agora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  function adicionarHistoricoPagamento(val, dataRef) {
+    const div  = document.getElementById('historico');
+    const hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const item = document.createElement('div');
     item.className = 'historico-item';
-    item.innerHTML = `
-      <div>
-        <div><span class="tag tag-pagamento">PAGAMENTO</span></div>
-        <div class="descricao">${agora}</div>
-      </div>
-      <div class="valor" style="color:#f7b731">R$ ${val.toFixed(2).replace('.', ',')}</div>
-    `;
+    item.innerHTML =
+      '<div>' +
+        '<div><span class="tag tag-pagamento">PAGAMENTO</span></div>' +
+        '<div class="descricao">' + (dataRef ? dataRef + ' — ' : '') + hora + '</div>' +
+      '</div>' +
+      '<div class="valor" style="color:#f7b731">R$ ' + val.toFixed(2).replace('.', ',') + '</div>';
     div.insertBefore(item, div.firstChild);
   }
 
-  // Inicializar
-  setProduto('XIS');
   atualizarResumo();
 </script>
 </body>
